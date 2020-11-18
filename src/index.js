@@ -3,19 +3,25 @@ import countryTemplate from './templates/country-card.hbs';
 import countryListTemplate from './templates/country-list.hbs';
 import API from './js/fetchCountries';
 import getRefs from './js/get-refs';
-import { defaults } from '@pnotify/core';
-
+import '@pnotify/core/dist/PNotify.css';
+import '@pnotify/core/dist/Material.css';
+import '@pnotify/core/dist/BrightTheme.css';
+import 'material-design-icons/iconfont/material-icons.css';
+import { defaults, alert } from '@pnotify/core';
 defaults.icons = 'material';
+defaults.styling = 'material';
+defaults.type = 'error';
+defaults.hide = true;
 defaults.width = '360px';
-defaults.minHeight = '40px';
+defaults.minHeight = '16px';
 defaults.delay = '1000';
 defaults.closer = false;
 defaults.sticker = false;
-defaults.addClass = 'error';
-defaults.autoOpen = false;
-import { error } from '@pnotify/core';
-import '@pnotify/core/dist/Material.css';
-import '@pnotify/core/dist/BrightTheme.css';
+// defaults.addClass = 'error';
+
+
+
+
 
 const debounce = require('lodash.debounce');
 
@@ -44,23 +50,16 @@ function renderCountryCard(country) {
     if (country.length === 1 ) { 
     const marcup = countryTemplate(country[0]);
         refs.marcupContainer.innerHTML = marcup;
-        
-}
+  }
 };
 
 function onFetchError(country) {
-    
-    if (country.length > 10) {
-        error({
+      if (country.length > 10) {
+        alert({
             text: `Too many matches found. Please enter a more specific querty!`,
-            type: error,
-        });
+           });
     };
     
 }
 
 
-// function pushError(err = `Too many matches found. Please enter a more specific querty`) { 
-//     error({ text: `${err}`,});
-      
-// };
