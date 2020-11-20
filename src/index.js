@@ -20,13 +20,9 @@ defaults.sticker = false;
 // defaults.addClass = 'error';
 
 
-
-
-
 const debounce = require('lodash.debounce');
-
-
 const refs = getRefs();
+
     
 refs.serchForm.addEventListener("input", debounce(onSerchCountry, 500));
 
@@ -40,7 +36,9 @@ function onSerchCountry(evt) {
 
 function renderCountryCard(country) {
     
-        onFetchError(country);
+    onFetchError(country);
+    
+    
     
     if (country.length > 1 && country.length < 10) {
         const marcup = countryListTemplate(country);
@@ -54,7 +52,8 @@ function renderCountryCard(country) {
 };
 
 function onFetchError(country) {
-      if (country.length > 10) {
+    console.log(country);
+      if (country.length > 10 || country.status === 404) {
         alert({
             text: `Too many matches found. Please enter a more specific querty!`,
            });
