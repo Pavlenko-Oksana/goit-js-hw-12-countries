@@ -14,7 +14,7 @@ defaults.type = 'error';
 defaults.hide = true;
 defaults.width = '360px';
 defaults.minHeight = '16px';
-defaults.delay = '1000';
+defaults.delay = '1500';
 defaults.closer = false;
 defaults.sticker = false;
 // defaults.addClass = 'error';
@@ -29,7 +29,13 @@ refs.serchForm.addEventListener("input", debounce(onSerchCountry, 500));
 function onSerchCountry(evt) {
     evt.preventDefault();
     const inputValue = evt.target.value;
-    
+    if (inputValue === '' || inputValue === ' ') {
+       return alert({
+            text: `Too many matches found. Please enter a more specific querty!`,
+        });
+     };  
+
+  
    API.fetchCountry(inputValue).then(renderCountryCard).catch(onFetchError);
  };
 
@@ -52,12 +58,13 @@ function renderCountryCard(country) {
 };
 
 function onFetchError(country) {
-    console.log(country);
-      if (country.length > 10 || country.status === 404) {
+    
+      if (country.length > 10 || country.status === 404 || country.error === SyntaxError ) {
         alert({
             text: `Too many matches found. Please enter a more specific querty!`,
            });
-    };
+  };
+  
     
 }
 
